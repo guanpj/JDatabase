@@ -21,6 +21,7 @@ import java.util.List;
  */
 
 public class BaseDao<T> {
+
     private Context mContext;
     private Class<T> mClz;
     private SQLiteDatabase mDatabase;
