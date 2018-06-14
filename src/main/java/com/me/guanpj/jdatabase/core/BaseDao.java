@@ -97,11 +97,11 @@ public class BaseDao<T> {
                                 String idFieldValue = null;
                                 if(mIdField != null){
                                     idFieldValue = mIdField.get(t).toString();
-                                    mDatabase.delete(DBUtil.getAssosiarionTableName(t.getClass(), field.getName()), DBUtil.PK1 + "=?", new String[]{idFieldValue});
+                                    mDatabase.delete(DBUtil.getAssociationTableName(t.getClass(), field.getName()), DBUtil.PK1 + "=?", new String[]{idFieldValue});
                                 }
                                 List<Object> tmany = (List<Object>) field.get(t);
                                 if(tmany != null && tmany.size() > 0) {
-                                    String assosiationTableName = DBUtil.getAssosiarionTableName(t.getClass(), field.getName());
+                                    String assosiationTableName = DBUtil.getAssociationTableName(t.getClass(), field.getName());
                                     ContentValues assosiationValues = new ContentValues();
                                     for (Object object : tmany) {
                                         if(column.autofresh()) {
@@ -145,7 +145,7 @@ public class BaseDao<T> {
         try {
             delete(mTableName, mIdColumnName + "=?", new String[]{id});
             for (Field foreignField : mForeignFields) {
-                delete(DBUtil.getAssosiarionTableName(mClz, foreignField.getName()), DBUtil.PK1 + "=?", new String[]{id});
+                delete(DBUtil.getAssociationTableName(mClz, foreignField.getName()), DBUtil.PK1 + "=?", new String[]{id});
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -201,7 +201,7 @@ public class BaseDao<T> {
                                 field.set(t, tone);
                             } else if(myType == Column.ColumnType.TMANY) {
                                 Class relatedClass = (Class) ((ParameterizedType)field.getGenericType()).getActualTypeArguments()[0];
-                                Cursor assosiationCursor = mDatabase.rawQuery("select * from " + DBUtil.getAssosiarionTableName(t.getClass(), field.getName()) +
+                                Cursor assosiationCursor = mDatabase.rawQuery("select * from " + DBUtil.getAssociationTableName(t.getClass(), field.getName()) +
                                         " where " + DBUtil.PK1 + "=?", new String[]{id});
                                 ArrayList<Object> list = new ArrayList<>();
                                 while (assosiationCursor.moveToNext()) {

@@ -91,7 +91,7 @@ public class DBManager {
                                 if(mainTableIdField != null){
                                     mainTableIdField.setAccessible(true);
                                     mainTableIdValue = mainTableIdField.get(t).toString();
-                                    mDatabase.delete(DBUtil.getAssosiarionTableName(t.getClass(), field.getName()), DBUtil.PK1 + "=?", new String[]{mainTableIdValue});
+                                    mDatabase.delete(DBUtil.getAssociationTableName(t.getClass(), field.getName()), DBUtil.PK1 + "=?", new String[]{mainTableIdValue});
                                 }
                                 List<Object> tmany = (List<Object>) field.get(t);
                                 if(tmany != null && tmany.size() > 0) {
@@ -108,7 +108,7 @@ public class DBManager {
                                             tmanyIdField.setAccessible(true);
                                             assosiationValues.put(DBUtil.PK2, tmanyIdField.get(object).toString());
                                         }
-                                        mDatabase.replace(DBUtil.getAssosiarionTableName(t.getClass(), field.getName()), null, assosiationValues);
+                                        mDatabase.replace(DBUtil.getAssociationTableName(t.getClass(), field.getName()), null, assosiationValues);
                                     }
                                 }
                             }
@@ -179,7 +179,7 @@ public class DBManager {
                                 field.set(t, tone);
                             } else if(myType == Column.ColumnType.TMANY) {
                                 Class relatedClass = (Class) ((ParameterizedType)field.getGenericType()).getActualTypeArguments()[0];
-                                Cursor assosiationCursor = mDatabase.rawQuery("select * from " + DBUtil.getAssosiarionTableName(t.getClass(), field.getName()) +
+                                Cursor assosiationCursor = mDatabase.rawQuery("select * from " + DBUtil.getAssociationTableName(t.getClass(), field.getName()) +
                                         " where " + DBUtil.PK1 + "=?", new String[]{id});
                                 ArrayList<Object> list = new ArrayList<>();
                                 while (assosiationCursor.moveToNext()) {

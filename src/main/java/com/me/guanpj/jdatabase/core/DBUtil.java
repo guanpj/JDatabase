@@ -40,7 +40,7 @@ public class DBUtil {
             for (Field field : fields) {
                 if(field.isAnnotationPresent(Column.class)){
                     if(field.getAnnotation(Column.class).type() == Column.ColumnType.TMANY){
-                        statement.add("create table if not exists " + getAssosiarionTableName(clz, field.getName()) +
+                        statement.add("create table if not exists " + getAssociationTableName(clz, field.getName()) +
                                 "(" + PK1 + " TEXT, " + PK2 + " TEXT)");
                     }
                     sb.append(getColumnStatement(field));
@@ -146,7 +146,7 @@ public class DBUtil {
         return null;
     }
 
-    public static String getAssosiarionTableName(Class<?> clz, String association) {
+    public static String getAssociationTableName(Class<?> clz, String association) {
         return getTableName(clz) + "_" + association;
     }
 
